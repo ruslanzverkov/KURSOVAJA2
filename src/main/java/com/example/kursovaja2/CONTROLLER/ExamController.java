@@ -2,9 +2,12 @@ package com.example.kursovaja2.CONTROLLER;
 
 
 import com.example.kursovaja2.SERVICE.ExaminerService;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("exam/get/")
 public class ExamController {
 
     private final ExaminerService examinerService;
@@ -13,7 +16,8 @@ public class ExamController {
         this.examinerService = examinerService;
     }
 
-    public int getQuestions(int amount) {
+    @RequestMapping("{amount}")
+    public int getQuestions( @PathVariable int amount ) {
         return amount;
     }
 }
