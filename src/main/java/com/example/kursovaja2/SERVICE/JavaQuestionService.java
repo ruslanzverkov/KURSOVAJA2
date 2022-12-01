@@ -1,42 +1,55 @@
 package com.example.kursovaja2.SERVICE;
 
+import com.example.kursovaja2.EXCEPTION.QuestionNotFoundException;
+import com.example.kursovaja2.EXCEPTION.QuestionsEmptyException;
 import com.example.kursovaja2.MODEL.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
+
 @Service
 public class JavaQuestionService implements QuestionService {
 
+    private final Random random;
+
     private final Set<Question> questions;
 
-    public JavaQuestionService(Set<Question> questions) {
-        this.questions = questions;
+    public JavaQuestionService() {
+        this.random =new Random();
+        this.questions = new HashSet<>();
     }
-
 
     @Override
     public Question add(String question, String answer) {
-        return null;
+        return add(new Question(question, answer));
     }
 
     @Override
     public Question add(Question question) {
-        return null;
+        questions.add(question);
+        return question;
     }
 
     @Override
     public Question remove(Question question) {
-        return null;
+        if (!questions.contains(question)) {
+            throw new QuestionNotFoundException();
+        }
+        questions.remove(question);
+
+        return question;
     }
 
     @Override
     public Collection<Question> getAll() {
-        return null;
+        return Collections.unmodifiableCollection(questions);
     }
 
     @Override
     public Question getRandomQuestion() {
-        return null;
+        if (questions.size() == 0) {
+            throw new QuestionsEmptyException();
+        }
+        return new ArrayList<>(questions).get(random.nextInt(questions.size()));
     }
 }

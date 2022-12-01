@@ -1,15 +1,18 @@
 package com.example.kursovaja2.SERVICE;
 
+import com.example.kursovaja2.EXCEPTION.NotEnoughQuestionsException;
 import com.example.kursovaja2.MODEL.Question;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.tags.form.SelectTag;
 
 import java.util.Collection;
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService questionService;
-    private Random random;
+
 
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
@@ -17,7 +20,17 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        return null;
+        Collection<Question> questions = questionService.getAll();
+        if (amount > questions.size() || amount < 1) {
+            throw new NotEnoughQuestionsException();
+        }
+
+        Set<Question> result = new HashSet<>();
+        while (result.size() < amount) {
+            result.add(questionService.getRandomQuestion());
+        }
+
+        return result;
     }
 
 

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("exam/get/")
+@RequestMapping("exam/")
 public class ExamController {
 
     private final ExaminerService examinerService;
@@ -16,7 +16,7 @@ public class ExamController {
         this.examinerService = examinerService;
     }
 
-    @RequestMapping("{amount}")
+    @RequestMapping("get/{amount}")
     public int getQuestions( @PathVariable int amount ) {
         return amount;
     }

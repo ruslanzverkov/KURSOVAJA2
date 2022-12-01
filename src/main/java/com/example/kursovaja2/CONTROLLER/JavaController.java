@@ -22,7 +22,8 @@ public class JavaController {
     }
 
     @GetMapping("/add")
-    public Question addQuestion(@RequestParam("question") String question, String answer) {
+    public Question addQuestion(@RequestParam String question,
+                                @RequestParam String answer) {
         return service.add(question, answer);
     }
 
@@ -32,7 +33,8 @@ public class JavaController {
     }
 
     @GetMapping("/remove")
-    public Question removeQuestions(@RequestParam("question") String question, String answer) {
+    public Question removeQuestions(@RequestParam String question,
+                                    @RequestParam String answer) {
         return null;
     }
 }
